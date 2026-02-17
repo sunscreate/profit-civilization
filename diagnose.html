@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>AI節税診断</title>
+</head>
+<body>
+<h1>AI個別節税診断</h1>
+
+<form id="taxForm">
+年収：
+<input type="number" id="income"><br><br>
+
+副業の有無：
+<select id="side">
+<option value="なし">なし</option>
+<option value="あり">あり</option>
+</select><br><br>
+
+法人の有無：
+<select id="corp">
+<option value="なし">なし</option>
+<option value="あり">あり</option>
+</select><br><br>
+
+不動産保有：
+<select id="estate">
+<option value="なし">なし</option>
+<option value="あり">あり</option>
+</select><br><br>
+
+経費割合（%）：
+<input type="number" id="expense"><br><br>
+
+<button type="button" onclick="generate()">診断する</button>
+</form>
+
+<hr>
+
+<div id="result"></div>
+
+<script>
+async function generate() {
+  const data = {
+    income: document.getElementById("income").value,
+    side: document.getElementById("side").value,
+    corp: document.getElementById("corp").value,
+    estate: document.getElementById("estate").value,
+    expense: document.getElementById("expense").value
+  };
+
+  const res = await fetch("https://YOUR_API_ENDPOINT", {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify(data)
+  });
+
+  const text = await res.text();
+  document.getElementById("result").innerHTML = text;
+}
+</script>
+
+</body>
+</html>
